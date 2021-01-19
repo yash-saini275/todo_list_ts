@@ -6,7 +6,7 @@ This is the REST API to organize all your tasks and their status whether it is p
 
 1. Clone the repository.
 ```
-git clone https://github.com/yash-saini275/todo_list_api
+git clone https://github.com/yash-saini275/todo_list_ts
 ```
 
 2. Go to the root of repository.
