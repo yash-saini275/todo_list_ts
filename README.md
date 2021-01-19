@@ -11,7 +11,7 @@ git clone https://github.com/yash-saini275/todo_list_ts
 
 2. Go to the root of repository.
 ```
-cd todo_list_api
+cd todo_list_ts
 ```
 
 3. Use **docker-compose** command to build and run the container
