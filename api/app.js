@@ -29,9 +29,11 @@ const dotenv = __importStar(require("dotenv"));
 const connect_1 = __importDefault(require("./connect"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // dotenv.config();
-dotenv.config({ path: `${__dirname}..\\.env` });
+dotenv.config({ path: `${__dirname}/../.env` });
 // Connect to Database
-connect_1.default(process.env.DB_URL.toString());
+const DB_URL = process.env.DB_URL;
+// console.log(process.env);
+connect_1.default(DB_URL);
 const app = express_1.default();
 // Body Parser and Cookie Parser Middlewares.
 app.use(body_parser_1.default.urlencoded());

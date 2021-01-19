@@ -8,10 +8,12 @@ import connect from './connect';
 import cookieParser from 'cookie-parser';
 
 // dotenv.config();
-dotenv.config({path: `${__dirname}..\\.env`});
+dotenv.config({path: `${__dirname}/../.env`});
 
 // Connect to Database
-connect(process.env.DB_URL!.toString());
+const DB_URL: string = process.env.DB_URL!;
+// console.log(process.env);
+connect(DB_URL);
 
 const app: express.Application = express();
 
