@@ -18,13 +18,13 @@ const createUser = (req, res) => {
 exports.createUser = createUser;
 const signinUser = (req, res) => {
     const username = req.body.username;
-    const password = req.body.password;
+    // const password: string = req.body.password;
     auth_model_1.default.findOne({ username: username }, (err, user) => {
         if (err)
             return res.status(400).json({ message: 'Invalid username or password.' });
         // console.log(user);
         if (user && req.body.password === user.password) {
-            jsonwebtoken_1.default.sign({ username: username }, process.env.SECRET_KEY, { algorithm: 'HS256' }, (err, token) => {
+            jsonwebtoken_1.default.sign({ userId: user._id }, process.env.SECRET_KEY, { algorithm: 'HS256' }, (err, token) => {
                 if (err) {
                     return res.status(400).json({ message: 'Invalid username or password.' });
                 }

@@ -1,6 +1,8 @@
 import { CommonRouteConfig } from "../common/common.routes.config";
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
+import * as authMiddleware from '../auth/middlewares/auth-middleware';
+import * as controllers from './controllers/todo-list-controller';
 
 export class TodoListAPIRoutes extends CommonRouteConfig{
     constructor(app: express.Application) {
@@ -10,27 +12,30 @@ export class TodoListAPIRoutes extends CommonRouteConfig{
     configureRoutes() {
         // Route for all list all the tasks and Create a new task.
         this.app.route('/tasks')
-            .get((req: Request, res: Response) => {
-                return res.status(200).send('List all the Tasks');
-            })
-            .post((req: Request, res: Response) => {
-                return res.status(200).send('Creating a new Task.')
-            })
+            .all(
+                authMiddleware.validTokenMiddleware
+            )
+            .get(
+                controllers.listTasks
+            )
+            .post(
+                controllers.createTask
+            )
         
         // Route to view, modify and delete a particular task.
         this.app.route('/tasks/:taskId')
-            .all((req: Request, res: Response, next: NextFunction) => {
-                next();
-            })
-            .get((req: Request, res: Response) => {
-                return res.status(200).send('List just one task.');
-            })
-            .put((req: Request, res: Response) => {
-                return res.status(200).send('Modify the task.');
-            })
-            .delete((req: Request, res: Response) => {
-                return res.status(200).send('Delete the task');
-            });
+            .all(
+                authMiddleware.validTokenMiddleware
+            )
+            .get(
+                controllers.listOneTask
+            )
+            .put(
+                controllers.editTask
+            )
+            .delete(
+                controllers.deleteTask
+            );
 
         return this.app;
     }

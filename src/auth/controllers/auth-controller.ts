@@ -16,7 +16,7 @@ export const createUser = (req: Request, res: Response) => {
 
 export const signinUser = (req: Request, res: Response) => {
     const username = req.body.username;
-    const password: string = req.body.password;
+    // const password: string = req.body.password;
 
     User.findOne({username: username}, (err: any, user: UserInterface) => {
         if(err)
@@ -25,7 +25,7 @@ export const signinUser = (req: Request, res: Response) => {
         // console.log(user);
         
         if(user && req.body.password === user.password) {
-            jwt.sign({username: username}, process.env.SECRET_KEY!, { algorithm: 'HS256' }, (err, token) => {
+            jwt.sign({userId: user._id}, process.env.SECRET_KEY!, { algorithm: 'HS256' }, (err, token) => {
                 if(err){
                     return res.status(400).json({message: 'Invalid username or password.'});
                 }

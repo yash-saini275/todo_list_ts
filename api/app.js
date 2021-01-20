@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const auth_routes_config_1 = require("./auth/auth.routes.config");
 const body_parser_1 = __importDefault(require("body-parser"));
+const todo_list_routes_config_1 = require("./todo-list/todo-list.routes.config");
 const dotenv = __importStar(require("dotenv"));
 const connect_1 = __importDefault(require("./connect"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
@@ -41,7 +42,7 @@ app.use(cookie_parser_1.default());
 const routes = [];
 // Routes Configuration.
 routes.push(new auth_routes_config_1.AuthRoutes(app));
-// routes.push(new TodoListAPIRoutes(app));
+routes.push(new todo_list_routes_config_1.TodoListAPIRoutes(app));
 // // CORS Policy
 // app.use((req: Request, res: Response, next: NextFunction) => {
 //     res.header("Access-Control-Allow-Headers","*");

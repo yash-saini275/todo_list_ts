@@ -25,7 +25,7 @@ const routes: Array<CommonRouteConfig> = [];
 
 // Routes Configuration.
 routes.push(new AuthRoutes(app));
-// routes.push(new TodoListAPIRoutes(app));
+routes.push(new TodoListAPIRoutes(app));
 
 // // CORS Policy
 // app.use((req: Request, res: Response, next: NextFunction) => {
