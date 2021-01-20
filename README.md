@@ -33,10 +33,10 @@ This will start the API and MongoDB server inside the container. Use **Postman**
 | /signup    | POST               | first_name, last_name, username, password | Create a new user. |
 | /signin    | POST               | username, password  | Login the user if account is already created. |
 | /signout   | GET                | **None**            | Logout the user. |
-<!-- | /tasks     | GET                | **None**            | Get all the tasks of current user. |
+| /tasks     | GET                | **None**            | Get all the tasks of current user. |
 |            | POST               | name                | Create a new task in logged in users account. |
 | /tasks/:taskId | GET            | **None**            | Get the particular task with id = taskId. |
 |            | PUT                | name                | Update the task. |
-|            | DELETE             | **None**            | Delete the task with id = taskId. | -->
+|            | DELETE             | **None**            | Delete the task with id = taskId. |
 
 
