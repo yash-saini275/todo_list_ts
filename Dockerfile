@@ -1,15 +1,19 @@
-FROM node:12
+FROM node
 
 WORKDIR /usr/src/app
 
 COPY package.json .
 
+COPY tsconfig.json .
+
+COPY src/ ./src
+
 RUN npm install
 
-COPY .env /usr/src/app/
+COPY .env .
 
-COPY ./api ./api
+RUN npm run build
 
 EXPOSE 8080
 
-CMD ["node", "./api/app.js"]
+CMD ["npm", "start"]
