@@ -21,13 +21,13 @@ resourceTypes:
     GET:
         get:
             response:
-            200:
-                body:
-                    application/json:
-                        type: <<item>>
+                200:
+                    body:
+                        application/json:
+                            type: <<item>>
 
-            403:
-                body:
+                403:
+                    body:
                     application/json:
                         type: <<item2>>
 
