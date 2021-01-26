@@ -4,6 +4,6 @@ api
 dist
 src
 .dockerignore
-docker-compose.yml
+.docker-compose.yml
 Dockerfile
 *.json
