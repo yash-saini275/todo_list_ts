@@ -5,17 +5,20 @@ baseUri: /auth
 
 types:
     User:
-        first_name: string
-        last_name: string
-        username: string
-        password: string
+        properties:
+            first_name: string
+            last_name: string
+            username: string
+            password: string
 
     Message:
-        msg: string
+        properties:
+            msg: string
 
     Login:
-        username: string
-        password: string
+        properties:
+            username: string
+            password: string
 
 resourceTypes:
     GET:
