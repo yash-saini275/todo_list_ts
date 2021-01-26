@@ -2,8 +2,3 @@ node_modules
 .env
 api
 dist
-src
-.dockerignore
-.docker-compose.yml
-Dockerfile
-*.json

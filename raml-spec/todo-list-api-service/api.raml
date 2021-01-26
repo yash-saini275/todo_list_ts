@@ -1,0 +1,95 @@
+#%RAML 1.0
+title: Todo List Service
+version: v1
+baseUri: /todolist
+
+types: 
+    TaskName:
+        properties:
+            name: string
+    
+    Task:
+        properties:
+            _id: string
+            name: string
+            status: string
+            userId: string
+    
+    Message:
+        properties:
+            msg: string
+    
+    TaskArray:
+        properties:
+            tasks: array
+
+resourceTypes:
+    GET:
+        get:
+            responses:
+                200:
+                    body:
+                        application/json:
+                            type: <<item>>
+                
+                403:
+                    body:
+                        application/json:
+                            type: <<item2>>
+    POST:
+        post: 
+            body:
+                application/json:
+                    type: <<item>>
+            responses: 
+                201:
+                    body:
+                        application/json:
+                            type: <<item2>>
+                
+                400:
+                    body:
+                        application/json:
+                            type: <<item2>>
+
+    PUT:
+        put:
+            body:
+                application/json:
+                    type: <<item>>
+            responses:
+                200:
+                    body:
+                        application/json:
+                            type:<<item2>>
+    
+    DELETE:
+        delete:
+            body:
+            responses:
+                200:
+                    body:
+                        application/json:
+                            type: <<item>>
+                
+                403:
+                    body:
+                        application/json:
+                            type: <<item2>>
+
+/:
+    type: { GET: {item: TaskArray} }
+    description: Get all the tasks of logged in User.
+
+    type: { POST: {item: TaskName} }
+    description: Create a new Task with userId == User._id
+    
+    /{taskId}:
+        type: { GET: {item: TaskName, item2: Message} }
+        description: List the task with `taskId == {taskId}` if the task is created by the current user.
+        
+        type: { PUT: {item: TaskName, item2: Task} }
+        description: Update the task with `taskId == {taskId}` if the task is created by logged in user.
+
+        type: {DELETE: {item: Message, item2: Message} }
+        description: Delete the task with `taskId == {taskId}` if the task is created logged in user.
