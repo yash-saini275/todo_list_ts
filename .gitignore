@@ -2,3 +2,9 @@ node_modules
 .env
 api
 dist
+src
+.dockerignore
+.docker-compose.yml
+Dockerfile
+package*.json
+tsconfig.json
