@@ -1,6 +1,5 @@
-import { App } from './config/app';
-import env from './config/env';
+import {App, env} from './config/';
 
-const application: App = new App()
+const application: App = new App();
 
 application.listen(env.PORT);

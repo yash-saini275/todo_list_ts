@@ -1,39 +1,39 @@
-import express from 'express';
-import { AuthRoutes, UserRoutes } from '../routes';
+import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
+import * as cookieParser from 'cookie-parser';
+import {AuthRoutes, UserRoutes} from '../routes';
 import DBConfig from './db';
 
-export class App {
-    public app : express.Application;
+export default class App {
+  public app: express.Application;
 
-    // private authRoutes: AuthRoutes = new AuthRoutes();
-    private userRoutes: UserRoutes = new UserRoutes();
+  private authRoutes: AuthRoutes = new AuthRoutes();
 
-    constructor() {
-        this.app = express();
-        this.configDB();
-        this.configMiddleware();
-        // this.authRoutes.configRoutes(this.app);
-        this.userRoutes.configRoutes(this.app);
-    }
+  private userRoutes: UserRoutes = new UserRoutes();
 
-    private configMiddleware(): void {
-        // Use Body Parser
-        this.app.use(bodyParser.urlencoded());
-        
-        // Cookie Parser
-        this.app.use(cookieParser());
+  constructor() {
+    this.app = express();
+    this.configDB();
+    this.configMiddleware();
+    this.authRoutes.configRoutes(this.app);
+    this.userRoutes.configRoutes(this.app);
+  }
 
-    }
+  private configMiddleware(): void {
+    // Use Body Parser
+    this.app.use(bodyParser.urlencoded());
 
-    private configDB(): void {
-        DBConfig();
-    }
+    // Cookie Parser
+    this.app.use(cookieParser());
+  }
 
-    public listen(port: string): void {
-        this.app.listen(port, () => {
-            console.log(`Express server listening on port ${port}`);
-        });
-    }
+  private configDB(): void {
+    DBConfig();
+  }
+
+  public listen(port: string): void {
+    this.app.listen(port, () => {
+      console.log(`Express server listening on port ${port}`);
+    });
+  }
 }

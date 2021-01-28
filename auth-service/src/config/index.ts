@@ -1,4 +1,3 @@
-export { App } from './app';
-import config from './env';
+export {default as env} from './env';
 
-export { config };
+export {default as App} from './app';

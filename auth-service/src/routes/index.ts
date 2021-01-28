@@ -1,2 +1,2 @@
-export { AuthRoutes } from './authRoutes';
-export { UserRoutes } from './userRoutes';
+export {default as AuthRoutes} from './user-routes';
+export {default as UserRoutes} from './auth-routes';

@@ -1,4 +1,3 @@
-import User from './user-schema';
+export {User} from './user-schema';
 
-export { IUser } from './user-interface';
-export default User;
+export {IUser} from './user-interface';
