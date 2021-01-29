@@ -3,6 +3,18 @@ import * as jwt from 'jsonwebtoken';
 import {AuthService} from '../services';
 import {env} from '../config';
 
+function isTokenValid(token: string) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, env.SECRET_KEY, (err, decoded) => {
+      if (err) {
+        reject(new Error('Invalid Token.'));
+      } else {
+        resolve(decoded);
+      }
+    });
+  });
+}
+
 export class AuthController {
   public authService: AuthService = new AuthService();
 
@@ -14,27 +26,35 @@ export class AuthController {
         password: req.body.password,
       };
 
-      this.authService
-        .loginUser(params)
-        .then(doc => {
-          // Matched the Username and password.
-          jwt.sign(
-            {userId: doc._id},
-            env.SECRET_KEY,
-            {expiresIn: '1h', algorithm: 'HS256'},
-            (err, token) => {
-              if (err) {
-                res.status(400).json({msg: 'Invalid Username or Password.'});
-              } else {
-                res.cookie('token', token);
-                res.status(200).json({msg: 'Successfully Logged In.'});
-              }
-            }
-          );
+      isTokenValid(req.cookies.token)
+        .then(decoded => {
+          return res.status(400).json({msg: 'Already Logged In as'});
         })
-        .catch(reason => {
-          // Password and Username doesn't match.
-          res.status(400).json({msg: 'Invalid Username or Password.'});
+        .catch(err => {
+          this.authService
+            .loginUser(params)
+            .then(doc => {
+              // Matched the Username and password.
+              jwt.sign(
+                {userId: doc._id},
+                env.SECRET_KEY,
+                {expiresIn: '1h', algorithm: 'HS256'},
+                (err, token) => {
+                  if (err) {
+                    res
+                      .status(400)
+                      .json({msg: 'Invalid Username or Password.'});
+                  } else {
+                    res.cookie('token', token);
+                    res.status(200).json({msg: 'Successfully Logged In.'});
+                  }
+                }
+              );
+            })
+            .catch(reason => {
+              // Password and Username doesn't match.
+              res.status(400).json({msg: reason.message});
+            });
         });
     } else {
       // Error not all parameters are passed.

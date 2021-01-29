@@ -12,16 +12,12 @@ export class AuthService {
         if (err) {
           reject(new Error('Invalid Username or Password.'));
         }
-        if (doc.password === params.password) {
+        if (doc && doc.password === params.password) {
           resolve(doc);
         } else {
           reject(new Error('Invalid Username or Password.'));
         }
       });
     });
-  }
-
-  public logoutUser(req: Request, res: Response) {
-    // Logout a User.
   }
 }
