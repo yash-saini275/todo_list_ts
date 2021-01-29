@@ -1,8 +1,10 @@
 import * as express from 'express';
+import {Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import {AuthRoutes, UserRoutes} from '../routes';
 import DBConfig from './db';
+import {logger} from './logger';
 
 export default class App {
   public app: express.Application;
@@ -17,6 +19,9 @@ export default class App {
     this.configMiddleware();
     this.authRoutes.configRoutes(this.app);
     this.userRoutes.configRoutes(this.app);
+    this.app.use((req: Request, res: Response) => {
+      res.status(404).json({msg: `${req.url} not found.`});
+    });
   }
 
   private configMiddleware(): void {
@@ -25,6 +30,9 @@ export default class App {
 
     // Cookie Parser
     this.app.use(cookieParser());
+
+    // Logger
+    this.app.use(logger);
   }
 
   private configDB(): void {
