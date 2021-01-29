@@ -10,9 +10,11 @@ const errorLoggerOptions = {
 };
 
 export const logger = express_winston.logger({
-  transports: [
-    new MongoDB(errorLoggerOptions),
-    new winston.transports.File({filename: 'access.log'}),
-  ],
+  transports: [new winston.transports.File({filename: 'access.log'})],
+  headerBlacklist: ['cookie'],
+});
+
+export const errorLogger = express_winston.errorLogger({
+  transports: [new MongoDB(errorLoggerOptions)],
   headerBlacklist: ['cookie'],
 });

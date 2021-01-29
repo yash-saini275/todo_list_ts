@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import {AuthRoutes, UserRoutes} from '../routes';
 import DBConfig from './db';
-import {logger} from './logger';
+import {logger, errorLogger} from './logger';
 
 export default class App {
   public app: express.Application;
@@ -19,6 +19,7 @@ export default class App {
     this.configMiddleware();
     this.authRoutes.configRoutes(this.app);
     this.userRoutes.configRoutes(this.app);
+    this.app.use(errorLogger);
     this.app.use((req: Request, res: Response) => {
       res.status(404).json({msg: `${req.url} not found.`});
     });
