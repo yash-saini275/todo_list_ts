@@ -16,9 +16,12 @@ export default class App {
   constructor() {
     this.app = express();
     this.configDB();
-    this.configMiddleware();
+
     this.authRoutes.configRoutes(this.app);
     this.userRoutes.configRoutes(this.app);
+
+    this.configMiddleware();
+
     this.app.use(errorLogger);
     this.app.use((req: Request, res: Response) => {
       res.status(404).json({msg: `${req.url} not found.`});
