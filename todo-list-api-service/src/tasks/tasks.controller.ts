@@ -8,23 +8,20 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Request } from 'express';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { TasksService } from './tasks.service';
 import { TaskDto } from './tasks.dto';
 
 @Controller('tasks')
 export class TasksController {
-  constructor(
-    @InjectModel('Task') private readonly taskService: TasksService,
-  ) {}
+  constructor(private taskService: TasksService) {}
 
   @Get()
   public async getAllTasks(@Req() req: Request) {
     const token = req.cookies.token;
     const decoded = jwt.decode(token);
-    return this.taskService.getAllTasks(decoded['userId']);
+    return this.taskService.getTasks(decoded['userId']);
   }
 
   @Post()

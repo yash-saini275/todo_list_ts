@@ -4,5 +4,5 @@ export class TaskDto {
   title: string;
   status?: string;
   date?: Date;
-  userId: mongoose.Types.ObjectId;
+  userId: mongoose.Schema.Types.ObjectId;
 }
