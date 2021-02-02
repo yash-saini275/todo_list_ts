@@ -1,8 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TasksModule } from './tasks/tasks.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
-  imports: [TasksModule, MongooseModule.forRoot('mongodb://localhost/tasks')],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(process.env.DB_URL),
+    TasksModule,
+  ],
 })
 export class AppModule {}
